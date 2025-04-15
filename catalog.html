@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="sq">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Katalogu - Dioren Foods</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="catalog.css" />
+    <link rel="stylesheet" href="animations.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header>
+      <div class="container">
+        <div class="logo">
+          <a href="index.html">
+            <img src="images/logo.svg" alt="Dioren Foods Logo" />
+          </a>
+        </div>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="index.html">Ballina</a></li>
+            <li><a href="about.html">Rreth nesh</a></li>
+            <li><a href="brands.html">Brendet</a></li>
+            <li><a href="catalog.html" class="active">Katalogu</a></li>
+            <li><a href="contact.html">Kontakti</a></li>
+          </ul>
+          <div class="catalog-btn">
+            <a
+              href="https://drive.google.com/uc?export=download&id=1L4R-Uh8dBeUzAsqB9uFWeHBc9bHrSfhp"
+              class="btn btn-primary"
+              download
+              ><i class="fas fa-download"></i> Shkarko Katalogun</a
+            >
+          </div>
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Catalog Hero Section -->
+    <section class="catalog-hero">
+      <div class="container">
+        <div class="catalog-hero-content">
+          <h1>Katalogu i Produkteve</h1>
+          <p>Zgjedhni nga produktet tona të cilësisë së lartë</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+      <div class="container">
+        <div class="filter-container">
+          <h2>Filtro Produktet</h2>
+          <div class="filter-options">
+            <button class="filter-btn active" data-filter="all">
+              Të gjitha
+            </button>
+            <button class="filter-btn" data-filter="ullinj">Ullinj</button>
+            <button class="filter-btn" data-filter="djath">Djathë</button>
+            <button class="filter-btn" data-filter="turshi">Turshi</button>
+            <button class="filter-btn" data-filter="vajra-uthull">
+              Vajra & Uthull
+            </button>
+            <button class="filter-btn" data-filter="salca">Salca</button>
+            <button class="filter-btn" data-filter="toppings">Toppings</button>
+            <button class="filter-btn" data-filter="miell">Miell</button>
+          </div>
+          <div class="search-container">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Kërko produkte..."
+            />
+            <button id="searchBtn"><i class="fas fa-search"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="catalog-products">
+      <div class="container">
+        <div class="products-grid" id="productsGrid">
+          <!-- Products will be loaded dynamically via JavaScript -->
+          <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Duke ngarkuar produktet...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-logo fade-in-up">
+            <img src="images/logo.svg" alt="Dioren Foods Logo" />
+          </div>
+          <div
+            class="footer-info fade-in-up stagger-delay-1"
+            style="
+              display: flex;
+              justify-content: center;
+              flex-direction: column;
+            "
+          >
+            <p>
+              <strong>Adresa e depos:</strong>
+              <span id="address">Mavriqi, Kastriot 15000</span>
+            </p>
+            <p>
+              <strong>Email:</strong>
+              <a href="mailto:info@dioren-ks.com">info@dioren-ks.com</a>
+            </p>
+            <p>
+              <strong>Numri i telefonit:</strong>
+              <a href="tel:+38349576623">+383 49 576 623</a>
+            </p>
+          </div>
+          <div
+            class="footer-social fade-in-up stagger-delay-2"
+            style="display: flex; justify-content: flex-end"
+          >
+            <a
+              href="https://www.facebook.com/profile.php?id=61557428339866"
+              target="_blank"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/diorenfoodindustry/"
+              target="_blank"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+        <div class="footer-bottom fade-in-up stagger-delay-3">
+          <p>&copy; 2025 Dioren Foods. Të gjitha të drejtat e rezervuara.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="catalog.js"></script>
+    <script src="animations.js"></script>
+  </body>
+</html>

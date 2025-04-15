@@ -1,0 +1,184 @@
+/* Intro Overlay */
+.intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.intro-logo {
+  width: 200px;
+  height: auto;
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.intro-text {
+  position: absolute;
+  bottom: 30%;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  z-index: 10;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  text-align: center;
+}
+
+/* Floating Icons Section */
+.floating-icons-section {
+  position: relative;
+  padding: 0;
+  overflow: visible;
+  background-color: #f9f9f9;
+  height: 40vh;
+  min-height: 300px;
+}
+
+.floating-icons-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.icons-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: visible;
+  transform: translate(-50%, -50%);
+}
+
+.floating-text-container {
+  position: absolute;
+  top: 69%;
+  left: 50%;
+  transform: translate(-50%, 10%);
+  text-align: center;
+  z-index: 10;
+  width: 90%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.floating-text h3 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.floating-text p {
+  font-size: 2rem;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.floating-icon {
+  position: absolute;
+  border-radius: 16px;
+  background-color: white;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+  padding: 18px;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.floating-icon img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Swiper Styles */
+.swiper-slide {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.swiper-slide-active {
+  z-index: 2;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.swiper-slide-prev,
+.swiper-slide-next {
+  opacity: 0.7;
+  z-index: 1;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .floating-icons-section {
+    padding: 60px 0;
+    min-height: 600px;
+  }
+
+  .floating-text-container {
+    gap: 30px;
+  }
+
+  .floating-text h3 {
+    font-size: 2.5rem;
+  }
+
+  .floating-text p {
+    font-size: 1.6rem;
+  }
+
+  .floating-icon {
+    width: 100px;
+    height: 100px;
+    padding: 18px;
+  }
+}
+
+@media (max-width: 576px) {
+  .floating-icons-container {
+    height: 100%;
+  }
+
+  .floating-text-container {
+    gap: 20px;
+    width: 95%;
+  }
+
+  .floating-text h3 {
+    font-size: 2rem;
+  }
+
+  .floating-text p {
+    font-size: 1.3rem;
+  }
+
+  .floating-icon {
+    width: 80px;
+    height: 80px;
+    padding: 12px;
+  }
+}
