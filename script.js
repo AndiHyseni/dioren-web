@@ -3,10 +3,12 @@ const hamburger = document.querySelector(".hamburger");
 const navLinks = document.querySelector(".nav-links");
 const catalogBtn = document.querySelector(".catalog-btn");
 
-if (hamburger) {
+if (hamburger && navLinks) {
   hamburger.addEventListener("click", () => {
     navLinks.classList.toggle("active");
-    catalogBtn.classList.toggle("active");
+    if (catalogBtn) {
+      catalogBtn.classList.toggle("active");
+    }
     hamburger.classList.toggle("active");
   });
 }

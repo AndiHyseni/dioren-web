@@ -840,7 +840,9 @@ document.addEventListener("DOMContentLoaded", function () {
       filteredProducts = filteredProducts.filter(
         (product) =>
           product.name.toLowerCase().includes(query) ||
-          product.code.toLowerCase().includes(query)
+          (product.code && product.code.toLowerCase().includes(query)) ||
+          (product.description &&
+            product.description.toLowerCase().includes(query))
       );
     }
 
@@ -933,13 +935,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Search functionality
     searchBtn.addEventListener("click", function () {
-      searchQuery = searchInput.value.trim();
+      searchQuery = searchInput.value.trim().toLowerCase();
       renderProducts();
     });
 
     searchInput.addEventListener("keyup", function (e) {
       if (e.key === "Enter") {
-        searchQuery = searchInput.value.trim();
+        searchQuery = searchInput.value.trim().toLowerCase();
         renderProducts();
       }
     });
