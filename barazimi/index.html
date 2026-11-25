@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="La Tarte">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#006836">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,10 +26,10 @@
   var APP_URL = 'https://script.google.com/macros/s/AKfycbzPKZDI45eaizmADj3UC1-zTdh87E4iwzekrpXlI2_F8F47FFQC263tqvLTL7y9CQIxAw/exec';
   var IS_IOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   var standalone = window.navigator.standalone === true || (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
+  // Aplikacioni i instaluar (iPhone dhe Android) e hap La Tarte brenda kësaj faqeje, pa shiritin e adresës.
+  // Aplikacioni nuk kërkon llogari Google (vetëm PIN), prandaj hapet edhe brenda kornizës.
   // ?test=frame vetëm për provë në kompjuter: e hap aplikacionin brenda faqes pa e instaluar.
-  var FRAME_MODE = standalone && !IS_IOS || /[?&]test=frame/.test(location.search);
-  // iPhone: hapet te aplikacioni (Safari nuk lejon hyrjen në Google brenda kornizës).
-  if (standalone && IS_IOS) window.location.replace(APP_URL);
+  var FRAME_MODE = standalone || /[?&]test=frame/.test(location.search);
 </script>
 <style>
   :root { --green: #006836; --cream: #f2e8d3; --cream-2: #f7f1e5; --ink: #352811; --ink-2: #5e4e36; --yellow: #fed12e; }
@@ -53,6 +53,9 @@
   body.framed { padding: 0; display: block; background: #0d1712; }
   body.framed main { display: none; }
   #appFrame { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; background: #0d1712; }
+  /* iPhone: hapësira e orës/baterisë lart mbetet me ngjyrën e kokës së aplikacionit */
+  body.framed { background: var(--green); }
+  body.framed #appFrame { top: env(safe-area-inset-top); height: calc(100% - env(safe-area-inset-top)); }
   #frameHelp { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 2; background: #fffdf8; color: var(--ink);
     border-radius: 12px; padding: 10px 14px; font-size: 14px; box-shadow: 0 6px 20px rgba(0,0,0,.25); max-width: calc(100% - 32px); text-align: center; }
   #frameHelp a { color: var(--green); font-weight: 700; }
@@ -95,13 +98,18 @@
     f.id = 'appFrame'; f.src = APP_URL; f.title = 'La Tarte Barazimet';
     f.setAttribute('allow', 'clipboard-write; fullscreen');
     document.body.appendChild(f);
-    // Nëse llogaria Google nuk është e hyrë në Chrome, Google nuk e shfaq faqen e hyrjes brenda kornizës:
-    // për pak sekonda tregohet një lidhje që e hap aplikacionin drejtpërdrejt.
-    var help = document.createElement('div');
-    help.id = 'frameHelp';
-    help.innerHTML = 'Nëse aplikacioni nuk hapet, <a href="' + APP_URL + '">prek këtu</a> (hyr me Google një herë).';
-    document.body.appendChild(help);
-    setTimeout(function () { help.remove(); }, 9000);
+    // Aplikacioni lajmëron kur hapet. Nëse pas 12 sekondash nuk është hapur (p.sh. pa internet),
+    // tregohet një lidhje që e hap drejtpërdrejt.
+    var gati = false;
+    window.addEventListener('message', function (e) { if (e.data && e.data.laTarte === 'gati') { gati = true; var h = document.getElementById('frameHelp'); if (h) h.remove(); } });
+    setTimeout(function () {
+      if (gati) return;
+      var help = document.createElement('div');
+      help.id = 'frameHelp';
+      help.innerHTML = 'Aplikacioni po vonon. <a href="#" id="reload">Provo përsëri</a> ose <a href="' + APP_URL + '">hape këtu</a>.';
+      document.body.appendChild(help);
+      document.getElementById('reload').onclick = function (ev) { ev.preventDefault(); location.reload(); };
+    }, 12000);
   } else {
     if (IS_IOS) document.getElementById('iosHelp').classList.remove('hidden');
     else if (/Android/.test(navigator.userAgent)) document.getElementById('androidHelp').classList.remove('hidden');
