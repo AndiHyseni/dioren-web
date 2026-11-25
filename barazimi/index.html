@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La Tarte Barazimet</title>
+<!--
+  Faqja hyrëse e aplikacionit "La Tarte Barazimet".
+  Qëllimi i vetëm: t'i japë iPhone-it dhe Android-it ikonën e La Tarte kur aplikacioni shtohet në ekranin kryesor.
+  Aplikacioni, të dhënat dhe hyrja mbeten në Google Apps Script (linku APP_URL më poshtë).
+-->
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="La Tarte">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#006836">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+<script>
+  // Linku i aplikacionit në Google Apps Script. Nëse publikohet ndonjëherë në një link tjetër, ndryshohet vetëm këtu.
+  var APP_URL = 'https://script.google.com/macros/s/AKfycbzPKZDI45eaizmADj3UC1-zTdh87E4iwzekrpXlI2_F8F47FFQC263tqvLTL7y9CQIxAw/exec';
+  var IS_IOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var standalone = window.navigator.standalone === true || (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
+  // ?test=frame vetëm për provë në kompjuter: e hap aplikacionin brenda faqes pa e instaluar.
+  var FRAME_MODE = standalone && !IS_IOS || /[?&]test=frame/.test(location.search);
+  // iPhone: hapet te aplikacioni (Safari nuk lejon hyrjen në Google brenda kornizës).
+  if (standalone && IS_IOS) window.location.replace(APP_URL);
+</script>
+<style>
+  :root { --green: #006836; --cream: #f2e8d3; --cream-2: #f7f1e5; --ink: #352811; --ink-2: #5e4e36; --yellow: #fed12e; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; background: var(--cream-2); color: var(--ink); }
+  body { font: 500 16px/1.5 Montserrat, system-ui, -apple-system, sans-serif; display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 32px 20px; }
+  main { width: 100%; max-width: 420px; text-align: center; }
+  .logo { width: 112px; height: 112px; border-radius: 50%; display: block; margin: 0 auto 22px; box-shadow: 0 10px 30px rgba(0,104,54,.25); }
+  h1 { font: 600 38px/1 "Playfair Display", Georgia, serif; letter-spacing: .1em; margin: 0; color: var(--green); }
+  .slogan { font: italic 500 19px/1.3 "Playfair Display", Georgia, serif; color: var(--ink-2); margin: 10px 0 4px; }
+  .sub { color: var(--ink-2); font-size: 14px; margin: 0 0 28px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 58px; border-radius: 16px; background: var(--green); color: #fff; font-weight: 700; font-size: 18px; text-decoration: none; }
+  .btn:active { background: #005e31; }
+  .help { margin-top: 26px; padding: 16px; border-radius: 14px; background: #fffdf8; border: 1px solid #e3d8bf; text-align: left; font-size: 14px; color: var(--ink-2); }
+  .help b { color: var(--ink); }
+  .help ol { margin: 8px 0 0; padding-left: 20px; }
+  .lines { display: flex; justify-content: center; gap: 5px; margin: 18px 0 0; }
+  .lines i { width: 5px; height: 22px; background: var(--green); opacity: .7; }
+  .hidden { display: none; }
+  /* Android i instaluar: aplikacioni brenda dritares, në gjithë ekranin */
+  body.framed { padding: 0; display: block; background: #0d1712; }
+  body.framed main { display: none; }
+  #appFrame { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; background: #0d1712; }
+  #frameHelp { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 2; background: #fffdf8; color: var(--ink);
+    border-radius: 12px; padding: 10px 14px; font-size: 14px; box-shadow: 0 6px 20px rgba(0,0,0,.25); max-width: calc(100% - 32px); text-align: center; }
+  #frameHelp a { color: var(--green); font-weight: 700; }
+  .install { margin-top: 12px; background: #fffdf8; color: var(--green); border: 2px solid var(--green); }
+</style>
+</head>
+<body>
+<main>
+  <img class="logo" src="icon-512.png" alt="LA TARTÈ">
+  <h1>LA TARTÈ</h1>
+  <p class="slogan">The taste you need.</p>
+  <p class="sub">Barazimi ditor</p>
+  <a class="btn" id="go" href="#">Hyr në aplikacion</a>
+  <button class="btn install hidden" id="installBtn" type="button">Instalo aplikacionin</button>
+
+  <div class="help hidden" id="iosHelp">
+    <b>Shtoje në ekranin kryesor të iPhone-it</b>
+    <ol>
+      <li>Prek butonin <b>Share</b> (katrori me shigjetë lart).</li>
+      <li>Zgjidh <b>Add to Home Screen</b>.</li>
+      <li>Prek <b>Add</b>. Ikona do të jetë logoja e La Tarte.</li>
+    </ol>
+  </div>
+  <div class="help hidden" id="androidHelp">
+    <b>Shtoje në ekranin kryesor</b>
+    <ol>
+      <li>Prek <b>⋮</b> lart djathtas në Chrome.</li>
+      <li>Zgjidh <b>Add to Home screen</b> (ose <b>Install app</b>).</li>
+      <li>Prek <b>Add</b>.</li>
+    </ol>
+  </div>
+  <div class="lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+</main>
+<script>
+  document.getElementById('go').href = APP_URL;
+  if (FRAME_MODE) {
+    // Aplikacioni i instaluar në Android: La Tarte hapet brenda kësaj dritareje, pa shiritin e adresës.
+    document.body.classList.add('framed');
+    var f = document.createElement('iframe');
+    f.id = 'appFrame'; f.src = APP_URL; f.title = 'La Tarte Barazimet';
+    f.setAttribute('allow', 'clipboard-write; fullscreen');
+    document.body.appendChild(f);
+    // Nëse llogaria Google nuk është e hyrë në Chrome, Google nuk e shfaq faqen e hyrjes brenda kornizës:
+    // për pak sekonda tregohet një lidhje që e hap aplikacionin drejtpërdrejt.
+    var help = document.createElement('div');
+    help.id = 'frameHelp';
+    help.innerHTML = 'Nëse aplikacioni nuk hapet, <a href="' + APP_URL + '">prek këtu</a> (hyr me Google një herë).';
+    document.body.appendChild(help);
+    setTimeout(function () { help.remove(); }, 9000);
+  } else {
+    if (IS_IOS) document.getElementById('iosHelp').classList.remove('hidden');
+    else if (/Android/.test(navigator.userAgent)) document.getElementById('androidHelp').classList.remove('hidden');
+    // Chrome në Android/kompjuter: butoni "Instalo aplikacionin" kur Chrome e lejon instalimin.
+    var deferred = null, btn = document.getElementById('installBtn');
+    window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; btn.classList.remove('hidden'); });
+    btn.addEventListener('click', function () { if (!deferred) return; deferred.prompt(); deferred.userChoice.then(function () { deferred = null; btn.classList.add('hidden'); }); });
+    window.addEventListener('appinstalled', function () { btn.classList.add('hidden'); });
+  }
+</script>
+</body>
+</html>
